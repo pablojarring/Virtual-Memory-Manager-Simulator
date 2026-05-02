@@ -227,16 +227,3 @@ final class PagedVirtualMemoryManagerSupport {
         }
     }
 }
-
-enum ReplacementPolicy {
-    NONE,
-    FIFO,
-    LRU
-}
-
-final class PageTableEntry {
-    boolean loaded;
-    int frameNumber = -1;
-    boolean dirty;
-    long lastAccessTime = -1L;
-}

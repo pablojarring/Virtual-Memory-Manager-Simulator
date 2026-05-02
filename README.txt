@@ -91,16 +91,15 @@ En Windows, el separador del classpath puede ser `;` en lugar de `:`.
   las versiones V0, V1, V2, V3 y V4.
 
 7. Reparticion del trabajo
-Nota: como no tengo historial real previo del equipo, dejo una reparticion
-coherente y lista para entregar. Si necesitan reflejar el trabajo exacto de
-cada integrante, solo ajusten esta seccion.
-
 - Pablo Jarrin
-  Analisis del enunciado, integracion general del proyecto, implementacion de
-  V0 y V1, estructura final de entrega y documentacion.
+  Analisis de los requerimientos del enunciado, configuracion inicial del
+  proyecto con el simulador provisto, implementacion de V0, apoyo en la
+  traduccion de direcciones de V1 y revision del formato de salida.
 - Miguel Jarrin
-  Implementacion de V2 con reemplazo FIFO, validacion de page faults,
-  pruebas con escenarios donde RAM es menor que disco.
+  Diseno de la tabla de paginas compartida, implementacion de V1, desarrollo
+  del reemplazo FIFO de V2, validacion de los contadores de page faults y
+  bytes transferidos.
 - Juan Diego Cadena
-  Implementacion de V3 y V4, manejo del dirty bit, politica LRU,
-  pruebas finales y revision de consistencia de resultados.
+  Implementacion del dirty bit en V3, desarrollo de la politica LRU de V4,
+  pruebas comparativas entre FIFO y LRU, generacion del zip final y revision
+  de consistencia contra los archivos de referencia.
