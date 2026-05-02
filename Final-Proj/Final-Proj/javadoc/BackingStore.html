@@ -1,0 +1,331 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>BackingStore</title>
+<link rel="stylesheet" type="text/css" href="./BackingStore_files/stylesheet.css" title="Style">
+<script type="text/javascript" src="./BackingStore_files/script.js.download"></script>
+</head>
+<body>
+<script type="text/javascript"><!--
+    try {
+        if (location.href.indexOf('is-external=true') == -1) {
+            parent.document.title="BackingStore";
+        }
+    }
+    catch(err) {
+    }
+//-->
+var methods = {"i0":10,"i1":10,"i2":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var altColor = "altColor";
+var rowColor = "rowColor";
+var tableTab = "tableTab";
+var activeTableTab = "activeTableTab";
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a name="navbar.top">
+<!--   -->
+</a>
+<div class="skipNav"><a href="./BackingStore.html#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.top.firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="./vmsimulation_files/package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev&nbsp;Class</li>
+<li><a href="./BitwiseToolbox.html" title="class in vmsimulation"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="./BackingStore.html" target="_top">No&nbsp;Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top" style="display: block;">
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="./BackingStore.html#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="./BackingStore.html#method.summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="./BackingStore.html#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="./BackingStore.html#method.detail">Method</a></li>
+</ul>
+</div>
+<a name="skip.navbar.top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+<!-- ======== START OF CLASS DATA ======== -->
+<div class="header">
+<div class="subTitle">vmsimulation</div>
+<h2 title="Class BackingStore" class="title">Class BackingStore</h2>
+</div>
+<div class="contentContainer">
+<ul class="inheritance">
+<li>java.lang.Object</li>
+<li>
+<ul class="inheritance">
+<li>vmsimulation.BackingStore</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<hr>
+<br>
+<pre>public class <span class="typeNameLabel">BackingStore</span>
+extends java.lang.Object</pre>
+<div class="block">An abstraction of disk storage that is page-addressable.</div>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="constructor.summary">
+<!--   -->
+</a>
+<h3>Constructor Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+<tbody><tr>
+<th class="colOne" scope="col">Constructor and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="./BackingStore.html#BackingStore-int-int-int-">BackingStore</a></span>(int&nbsp;capacity,
+            int&nbsp;pageSize,
+            int&nbsp;seed)</code>
+<div class="block">Creates a backing store with a given capacity (in bytes) and
+ a given page size (in bytes).</div>
+</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<!-- ========== METHOD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method.summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<tbody><tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr id="i0" class="altColor">
+<td class="colFirst"><code>byte[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="./BackingStore.html#readPage-int-">readPage</a></span>(int&nbsp;page)</code>
+<div class="block">Returns the content of a page on the backing store as an array of byte values</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="./BackingStore.html#size--">size</a></span>()</code>
+<div class="block">Returns the capacity of the backing store (in bytes)</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="./BackingStore.html#writePage-int-byte:A-">writePage</a></span>(int&nbsp;page,
+         byte[]&nbsp;data)</code>
+<div class="block">Writes an array of byte values to a page of the backing store</div>
+</td>
+</tr>
+</tbody></table>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="constructor.detail">
+<!--   -->
+</a>
+<h3>Constructor Detail</h3>
+<a name="BackingStore-int-int-int-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>BackingStore</h4>
+<pre>public&nbsp;BackingStore(int&nbsp;capacity,
+                    int&nbsp;pageSize,
+                    int&nbsp;seed)
+             throws <a href="./MemoryException.html" title="class in vmsimulation">MemoryException</a></pre>
+<div class="block">Creates a backing store with a given capacity (in bytes) and
+ a given page size (in bytes). This constructor is called by Simulator, so no need
+ to call it from your own code for this assignment.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>capacity</code> - Backing store capacity in bytes (must be a power of 2, strictly greater than 1)</dd>
+<dd><code>pageSize</code> - Page size in bytes (must be a power of 2, strictly greater than 1, that divides capacity)</dd>
+<dd><code>seed</code> - A random seed to generated initial disk content</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="./MemoryException.html" title="class in vmsimulation">MemoryException</a></code> - If parameters are invalid</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+<!-- ============ METHOD DETAIL ========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method.detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="size--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>size</h4>
+<pre>public&nbsp;int&nbsp;size()</pre>
+<div class="block">Returns the capacity of the backing store (in bytes)</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>capacity in bytes</dd>
+</dl>
+</li>
+</ul>
+<a name="readPage-int-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>readPage</h4>
+<pre>public&nbsp;byte[]&nbsp;readPage(int&nbsp;page)
+                throws <a href="./MemoryException.html" title="class in vmsimulation">MemoryException</a></pre>
+<div class="block">Returns the content of a page on the backing store as an array of byte values</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>page</code> - The page number</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The page content, as a byte array</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="./MemoryException.html" title="class in vmsimulation">MemoryException</a></code> - if the backing store access is invalid</dd>
+</dl>
+</li>
+</ul>
+<a name="writePage-int-byte:A-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>writePage</h4>
+<pre>public&nbsp;void&nbsp;writePage(int&nbsp;page,
+                      byte[]&nbsp;data)
+               throws <a href="./MemoryException.html" title="class in vmsimulation">MemoryException</a></pre>
+<div class="block">Writes an array of byte values to a page of the backing store</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>page</code> - The page number</dd>
+<dd><code>data</code> - The data to be written to the page</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="./MemoryException.html" title="class in vmsimulation">MemoryException</a></code> - if the backing store access is invalid</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<!-- ========= END OF CLASS DATA ========= -->
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a name="navbar.bottom">
+<!--   -->
+</a>
+<div class="skipNav"><a href="./BackingStore.html#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.bottom.firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="./vmsimulation_files/package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev&nbsp;Class</li>
+<li><a href="./BitwiseToolbox.html" title="class in vmsimulation"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="./BackingStore.html" target="_top">No&nbsp;Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom" style="display: block;">
+<li><a href="./All Classes.html">All&nbsp;Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="./BackingStore.html#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="./BackingStore.html#method.summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="./BackingStore.html#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="./BackingStore.html#method.detail">Method</a></li>
+</ul>
+</div>
+<a name="skip.navbar.bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+
+</body></html>

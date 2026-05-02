@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title> Final Project </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+</head>
+<body>
+  <h2 id="Final Project--address-translation-simulation">Final Project</h2>
+
+<hr>
+
+
+
+<h4 id="what-to-turn-in">What to turn in?</h4>
+
+
+
+<ul>
+  <li>vmmanager: A directory</li>
+  <li>vmmanager/VirtualMemoryManagerV0.java</li>
+  <li>vmmanager/VirtualMemoryManagerV1.java</li>
+  <li>vmmanager/VirtualMemoryManagerV2.java</li>
+  <li>vmmanager/VirtualMemoryManagerV3.java</li>
+  <li>vmmanager/VirtualMemoryManagerV4.java</li>
+  <li>Whatever other helper classes you need in their own class files in the vmmanager directory.</li>
+  <li>README.txt: your plain text report listing each member of the group and what each member did.</li>
+  <li>The directory and files should be compressed into a zip file and uploaded to the D2L.</li>
+  <li>I have used without any problems jdk-15.0.1 to run the simulator. </li>
+</ul>
+
+<h4 id="environment">Environment</h4>
+
+<p>You should be able to do this project on any environment (since it’s Java).</p>
+
+<hr>
+
+<hr>
+
+<h3 id="overview">Overview</h3>
+
+<p>The ultimate objective is to implement a simulation of a Virtual
+Memory Management system. Only a single process is considered(i.e., there is one
+address space) and only its memory accesses are considered(no simulation
+of the process’ execution).</p>
+
+<p>A Java
+package called vmsimulation is provided to you. This package contains all basic simulation
+functionalities that you’ll use, and you cannot modify it.  It has the following 5 classes all documented in
+<a href="./javadoc/All Classes.html">this javadoc</a>:</p>
+
+<ul>
+  <li><b>BitwiseToolbox:</b> a small class with two static methods that are used to manipulate binary data.</li>
+  <li><b>MemoryException:</b> a tiny exception class for our (simulated) system.</li>
+  <li><b>MainMemory:</b> an abstraction of the main memory.</li>
+  <li><b>BackingStore:</b> an abstraction of the backing store (i.e., the disk).</li>
+  <li><b>Simulator:</b> the simulator itself, which uses <i>dynamic class loading</i> to test your code. It
+     implements a main method that takes several command-line argument. The first one is the version
+ of implementation : “V0” (Problem #0), “V1” (Problem #1), “V2”
+ (Problem #2), “V3” (Problem #3), or “V4” (Problem #4).</li>
+</ul>
+
+<p>In each of the subsequent questions, you must implement a class called
+<b>VirtualMemoryManagerVx</b> (for x=0, 1, 2, 3, 4). For each you are given
+a java source file with method declarations, and you must “just add code”.
+<b>Each VirtualMemoryManagerVx must all be declared to be part of the <tt>vmmanager</tt> package</b></p>
+
+<p>Note that some of the methods will be unchanged between versions, and you can thus
+“cut-and-paste” some code from one version to the next. (In real life, cut-and-pasting code
+is evil, but we’re doing it here because we’re doing incremental development so that you
+can get some credit even if you don’t finish the assignment entirely!)</p>
+
+<hr>
+
+<h3 id="directory-structure-for-running-your-code">Directory structure
+for running your code</h3>
+
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">&gt; final-project.zip
+&gt; ls
+README    vmmanager
+&gt; ls vmmanager
+VirtualMemoryManagerV0.java VirtualMemoryManagerV1.java
+VirtualMemoryManagerV2.java VirtualMemoryManagerV3.java
+VirtualMemoryManagerV4.java
+&gt; ls
+README    vmmanager     vmsimulation.jar
+&gt; javac -cp vmsimulation.jar vmmanager/*.java
+&gt; jar -xf vmsimulation.jar
+ls
+README    vmmanager     vmsimulation    vmsimulation.jar
+&gt; java vmsimulation/Simulator V0
+Usage: Simulation V0 &lt;RAM size&gt; &lt;num transactions&gt; &lt;rng seed&gt;</code></pre></figure>
+
+<p>The last line above invokes your V0 implementation without the command-line arguments,
+which causes the simulator to exit with a “usage” error message.</p>
+
+<hr>
+
+<h3 id="problem-0-physical-addresses">Problem #0: Physical Addresses Only</h3>
+
+<p>In this question, we simulate a system that only has a main memory (no disk) and uses
+physical addressing (no address translation whatsoever, welcome to the 60’s).
+The simulator (which you don’t write), will set all bytes in RAM to zero.</p>
+
+<p>Your goal is to implement the VirtualMemoryManagerV0.java
+class. I provide you with this VirtualMemoryManagerV0.java
+This is the only file you need
+to modify.</p>
+
+<p>Run the command:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">java vmsimulation/Simulator V0</code></pre></figure>
+
+<p>to see the expected command-line arguments for invoking the simulator.</p>
+
+<p>If you execute the simulator with the empty implementation of <tt>VirtualMemoryManagerV0</tt>,
+you’ll get this output regardless of the value of the command-line arguments:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">INITIAL RAM CONTENT: ALL ZEROS
+---------------------------------------------
+PERFORMING RANDOMLY GENERATED TRANSACTIONS...
+Read transaction for physical address: 1100
+Write transaction for physical address: 1110
+Read transaction for physical address: 0101
+Write transaction for physical address: 1011
+Read transaction for physical address: 0010
+Write transaction for physical address: 0001
+Read transaction for physical address: 1110
+Write transaction for physical address: 0000
+Read transaction for physical address: 1000
+Write transaction for physical address: 1111
+END OF MEMORY TRANSACTIONS
+---------------------------------------------
+MEMORY CONTENT:
+---------------------------------------------</code></pre></figure>
+
+<p>There are 3 methods you should implement in the <tt>VirtualMemoryManagerV0</tt> class:</p>
+
+<ul>
+  <li><tt>writeByte()</tt>: a method that is given a 4-byte integer (the physical address), and a byte (the value), and writes in RAM (i.e., the simulated <tt>MainMemory</tt>)  the value at the address; and also prints to <tt>System.out</tt> some helpful message.</li>
+  <li><tt>readByte()</tt>: a method that is given a 4-byte integer (the physical address), and returns the value in RAM (i.e., the simulated <tt>MainMemory</tt>) at that address; and also prints to <tt>System.out</tt> some helpful message.</li>
+  <li><tt>printMemoryContent()</tt>: a method that prints out to <tt>System.out</tt> the content of RAM.</li>
+</ul>
+
+<p><strong>Important:</strong> The physical address is passed to <tt>writeByte</tt> and
+<tt>readByte</tt> as a 4-byte integer, i.e., a 32-bit address. However,
+we’ll simulate RAM way smaller than 2<sup>32</sup> bytes!  If we simulate a
+RAM with 2<sup>n</sup> bytes, then you will have to “extract” the low n
+bits from the 32-bit integer. For instance, if the simulated RAM is
+supposed to be 32 bytes, and the 4-byte integer given to you as an address
+is 1110 1111 1100 1101 0010 1011 0111 0101, then you would actually use
+10101 as a 5-bit address (which as an <tt>int</tt> in decimal would then be
+21, which you would then pass to <tt>MainMemory</tt> for reading/writing).</p>
+
+<p>Such bit-wise operations are easily done with the useful methods provided by the <tt>BitwiseToolbox</tt> class (see the
+<a href="./javadoc/All Classes.html">javadoc</a>).</p>
+
+<p>Below is one example execution for a 16-byte memory, 5 randomly generated memory transactions (each composed of one read and one write), and seed 0 for the random number generator, which is generated
+by this command:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">java vmsimulation/Simulator V0 16 5 0 </code></pre></figure>
+
+<p>Below if the output that should be produced (note that your own code prints out the
+“RAM read:…” and “RAM write…” lines while performing transactions, and the “address: value” lines for the memory content):</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">INITIAL RAM CONTENT: ALL ZEROS
+---------------------------------------------
+PERFORMING RANDOMLY GENERATED TRANSACTIONS...
+Read transaction for physical address: 1100
+RAM read: @1100 --&gt; 0
+Write transaction for physical address: 1110
+RAM write: @1110 &lt;-- -56
+Read transaction for physical address: 0101
+RAM read: @0101 --&gt; 0
+Write transaction for physical address: 1011
+RAM write: @1011 &lt;-- 119
+Read transaction for physical address: 0010
+RAM read: @0010 --&gt; 0
+Write transaction for physical address: 0001
+RAM write: @0001 &lt;-- -17
+Read transaction for physical address: 1110
+RAM read: @1110 --&gt; -56
+Write transaction for physical address: 0000
+RAM write: @0000 &lt;-- -65
+Read transaction for physical address: 1000
+RAM read: @1000 --&gt; 0
+Write transaction for physical address: 1111
+RAM write: @1111 &lt;-- -59
+END OF MEMORY TRANSACTIONS
+---------------------------------------------
+MEMORY CONTENT:
+0000: -65
+0001: -17
+0010: 0
+0011: 0
+0100: 0
+0101: 0
+0110: 0
+0111: 0
+1000: 0
+1001: 0
+1010: 0
+1011: 119
+1100: 0
+1101: 0
+1110: -56
+1111: -59
+---------------------------------------------</code></pre></figure>
+
+<p>You will note that the final memory content is coherent with the memory transactions!</p>
+
+<p><b>Make sure you produce the output EXACTLY as above</b> including white spaces (no tabs).
+</p>
+
+<p>First you should test your code on small examples, visually inspecting that
+the memory/disk content is coherent with the memory transactions. For further
+testing, you are provided below with a set of output samples along with the
+command lines that produced them (make that that a <tt>diff</tt> between your output and these output returns nothing, i.e., did not found any differences):</p>
+
+<ul>
+  <li><tt>java vmsimulation/Simulator V0 16 20 0 &gt; q0_outputsample_1.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V0 16 20 42 &gt; q0_outputsample_2.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V0 1024 70 10 &gt; q0_outputsample_3.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V0 2048 800 20 &gt;q0_outputsample_4.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V0 4096 400 77 &gt;q0_outputsample_5.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V0 32 2000 167 &gt;q0_outputsample_6.txt </tt></li>
+</ul>
+
+<hr>
+
+<h3 id="question-1-virtual-address-translation-with-a-page-table">Problem #1: Virtual Address Translation with a Page Table</h3>
+
+<p>In this and all following questions we now simulate a disk (or “Backing Store”), and assume that the
+process address space fills up the whole disk.  We simulate demand paging (i.e., the use of a page table and
+of page faults to cause pages to be loaded from disk into RAM).  In this question we assume that <i>the RAM size is
+equal to the disk size</i>. This means that we’ll never need to evict any page back to disk because the entire address space
+fits in RAM.  The simulator initially fills the disk with random data, which is the content of the process address space.</p>
+
+<p>The main objective here is to perform <i>address translation</i> from virtual to physical, using the following steps as explained at length in the lecture notes:</p>
+<ul>
+  <li>Based on the virtual address determine the <strong>virtual page number</strong> and the <strong>offset</strong>;</li>
+  <li>Look up the <strong>page table</strong> to see if the page is loaded in a frame;</li>
+  <li>If it isn’t, then load it in a frame and update the page table;</li>
+  <li>Translate the virtual page number into a physical frame number and construct the physical address;</li>
+  <li>Access the data in RAM at that physical address.</li>
+</ul>
+
+<p><b>Important: </b> You’re on your own for implementing a page table, and
+you can use whatever data structure you want. It’s likely a good idea to
+have a class called <tt>PageTable</tt> (perhaps nested inside your
+<tt>VirtualMemoryManagerV1</tt> class, with some <tt>lookup()</tt> and <tt>update()</tt> methods and whatever other
+methods your need).</p>
+
+<p>All the above is to be implemented in a class called
+<tt>VirtualMemoryManagerV1</tt>, filling in all the empty methods in this
+VirtualMemoryManagerV1.java</a>
+file that you should use a a starting point.  This is the only file you need to modify.</p>
+
+<p>More specifically, you’ll to implement the following methods:</p>
+
+<ul>
+  <li><tt>writeByte()</tt>: same purpose (but different implementation) as in the previous question</li>
+  <li><tt>readByte()</tt>: same purpose (but different implementation) as in the previous question</li>
+  <li><tt>printMemoryContent()</tt>: same purpose (and same implementation!) as in the previous question</li>
+  <li><tt>printDiskContent()</tt>: a method that prints out the bytes stored on the disk</li>
+  <li><tt>writeBackAllPagesToDisk()</tt>: a method that writes back all pages that are in RAM to disk</li>
+  <li><tt>getPageFaultCount()</tt>: a method that returns the number of page faults that have occured up to now</li>
+  <li><tt>getTransferedByteCount()</tt>: a method that returns the number of bytes that have been transferred between RAM and disk up to now</li>
+</ul>
+
+<p>Implementing these methods will require that you add new instance variables to the class (e.g., a page fault counter, a page table) and of
+course you’re allowed to add code to the constructor.</p>
+
+<p>Run the command:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">java vmsimulation/Simulator V1</code></pre></figure>
+
+<p>to see the expected command-line arguments for invoking the simulator.</p>
+
+<p>Your implementation, in addition to printing out memory read/write
+operations as in the previous question, must print out which pages are
+brought into which frames, count page faults, and count how many bytes are
+transferred back and forth between the disk and the main memory.</p>
+
+<p>Here is a small example execution for a 32-byte memory, 32-byte disk, 4-byte page size, 4 memory transactions (4 reads and 4 writes), and a seed of 1 for the random number generator, which is done with:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">java vmsimulation/Simulator V1 32 32 4 4 1</code></pre></figure>
+
+<p>and should produce this output:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">INITIAL RAM CONTENT: ALL ZEROS
+INITIAL DISK CONTENT:
+PAGE 0: 90,39,-121,-78
+PAGE 1: -119,24,-15,-73
+PAGE 2: -76,-32,-42,-47
+PAGE 3: -65,-34,77,4
+PAGE 4: 29,56,-69,127
+PAGE 5: 85,-13,-37,0
+PAGE 6: -61,-86,-53,-25
+PAGE 7: -25,4,-109,80
+---------------------------------------------
+PERFORMING RANDOMLY GENERATED TRANSACTIONS...
+Read transaction for virtual address: 10011
+Bringing page 4 into frame 0
+RAM: @00011 --&gt; 127
+Write transaction for virtual address: 01000
+Bringing page 2 into frame 1
+RAM: @00100 &lt;-- 20
+Read transaction for virtual address: 00010
+Bringing page 0 into frame 2
+RAM: @01010 --&gt; -121
+Write transaction for virtual address: 10100
+Bringing page 5 into frame 3
+RAM: @01100 &lt;-- -108
+Read transaction for virtual address: 00100
+Bringing page 1 into frame 4
+RAM: @10000 --&gt; -119
+Write transaction for virtual address: 01100
+Bringing page 3 into frame 5
+RAM: @10100 &lt;-- 71
+Read transaction for virtual address: 00011
+Page 0 is in memory
+RAM: @01011 --&gt; -78
+Write transaction for virtual address: 01110
+Page 3 is in memory
+RAM: @10110 &lt;-- -59
+END OF MEMORY TRANSACTIONS
+---------------------------------------------
+MEMORY CONTENT:
+00000: 29
+00001: 56
+00010: -69
+00011: 127
+00100: 20
+00101: -32
+00110: -42
+00111: -47
+01000: 90
+01001: 39
+01010: -121
+01011: -78
+01100: -108
+01101: -13
+01110: -37
+01111: 0
+10000: -119
+10001: 24
+10010: -15
+10011: -73
+10100: 71
+10101: -34
+10110: -59
+10111: 4
+11000: 0
+11001: 0
+11010: 0
+11011: 0
+11100: 0
+11101: 0
+11110: 0
+11111: 0
+---------------------------------------------
+WRITING PAGES BACK TO DISK...
+DISK CONTENT:
+PAGE 0: 90,39,-121,-78
+PAGE 1: -119,24,-15,-73
+PAGE 2: 20,-32,-42,-47
+PAGE 3: 71,-34,-59,4
+PAGE 4: 29,56,-69,127
+PAGE 5: -108,-13,-37,0
+PAGE 6: -61,-86,-53,-25
+PAGE 7: -25,4,-109,80
+---------------------------------------------
+NUM PAGE FAULTS: 6
+NUM BYTES TRANSFERRED: 48
+---------------------------------------------</code></pre></figure>
+
+<p>You will note that the final memory content is coherent with the initial disk content and with the memory transactions! Also note that pages are put into frames in physical memory order. In other words, the first page to be brought it is put in frame 0, the second page to be brought in is put in frame 1, etc.</p>
+
+<p><b>Make sure you produce the output as above</b> including white spaces (no tabs).
+</p>
+
+<p>First you should test your code on small examples, visually inspecting that
+the memory/disk content is coherent with the memory transactions. For further
+testing, you are provided below with a set of output samples along with the
+command lines that produced them (make your a <tt>diff</tt> between your
+output and these output returns nothing, i.e., no found differences):</p>
+
+<ul>
+  <li><tt>java vmsimulation/Simulator V1 16   16   4   20   0 &gt; q1_outputsample_1.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V1 16   16   4   20   1 &gt; q1_outputsample_2.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V1 1024 1024 16  20   2 &gt; q1_outputsample_3.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V1 2048 2048 32  100  20 &gt; q1_outputsample_4.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V1 4096 4096 256 200  21 &gt; q1_outputsample_5.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V1 32   32   8   2000 22 &gt; q1_outputsample_6.txt</tt></li>
+</ul>
+
+<hr>
+
+<h3 id="question-2-fifo-page-replacement">Problem #2: FIFO Page Replacement</h3>
+
+<p>We now enhance things further, in class <tt>VirtualMemoryManagerV2</tt>, so that we can handle an address space
+that’s larger than RAM space. Essentially, what your code must do is:</p>
+
+<ul>
+  <li>Keeps a list of free frames;</li>
+  <li>Evicts a victim page whenever a new page must be brought in and there are insufficient free frames;</li>
+  <li>Always selects the victim as the page that was brought into memory the longest time ago (your page table entries could keep track of some notion of time, or you could keep a FIFO data structure of page numbers that is separate from the page table);</li>
+  <li>Always write a victim page back to disk.</li>
+</ul>
+
+<p>Run the command:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">java vmsimulation/Simulator V2</code></pre></figure>
+
+<p>to see the expected command-line arguments for invoking the simulator.  The last command-line argument is a measure
+of locality when generating memory transactions (see the last question)</p>
+
+<p>All the above is to be implemented in a class called
+<tt>VirtualMemoryManagerV2</tt>. Make a copy of your <tt>VirtualMemoryManagerV1.java</tt>
+file, renaming it <tt>VirtualMemoryManagerV2.java</tt>, and use this as a starting point.</p>
+
+<p>Your implementation must now produce some output to say which page is being evicted back to disk.  For instance,
+running the command:</p>
+
+<p>Here is a small example execution for a 8-byte memory, 32-byte disk, 4-byte page size, 4 memory transactions (4 reads and 4 writes), a seed of 1 for the random number generator, and a locality of 0, which is done with:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">java vmsimulation/Simulator V2 8 32 4 4 1 0</code></pre></figure>
+
+<p>and should produce output this output:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">INITIAL RAM CONTENT: ALL ZEROS
+INITIAL DISK CONTENT:
+PAGE 0: 90,39,-121,-78
+PAGE 1: -119,24,-15,-73
+PAGE 2: -76,-32,-42,-47
+PAGE 3: -65,-34,77,4
+PAGE 4: 29,56,-69,127
+PAGE 5: 85,-13,-37,0
+PAGE 6: -61,-86,-53,-25
+PAGE 7: -25,4,-109,80
+---------------------------------------------
+PERFORMING RANDOMLY GENERATED TRANSACTIONS...
+Read transaction for virtual address: 10011
+Bringing page 4 into frame 0
+RAM: @011 --&gt; 127
+Write transaction for virtual address: 01000
+Bringing page 2 into frame 1
+RAM: @100 &lt;-- 20
+Read transaction for virtual address: 00010
+Evicting page 4
+Bringing page 0 into frame 0
+RAM: @010 --&gt; -121
+Write transaction for virtual address: 10100
+Evicting page 2
+Bringing page 5 into frame 1
+RAM: @100 &lt;-- -108
+Read transaction for virtual address: 00100
+Evicting page 0
+Bringing page 1 into frame 0
+RAM: @000 --&gt; -119
+Write transaction for virtual address: 01100
+Evicting page 5
+Bringing page 3 into frame 1
+RAM: @100 &lt;-- 71
+Read transaction for virtual address: 00011
+Evicting page 1
+Bringing page 0 into frame 0
+RAM: @011 --&gt; -78
+Write transaction for virtual address: 01110
+Page 3 is in memory
+RAM: @110 &lt;-- -59
+END OF MEMORY TRANSACTIONS
+---------------------------------------------
+MEMORY CONTENT:
+000: 90
+001: 39
+010: -121
+011: -78
+100: 71
+101: -34
+110: -59
+111: 4
+---------------------------------------------
+WRITING PAGES BACK TO DISK...
+DISK CONTENT:
+PAGE 0: 90,39,-121,-78
+PAGE 1: -119,24,-15,-73
+PAGE 2: 20,-32,-42,-47
+PAGE 3: 71,-34,-59,4
+PAGE 4: 29,56,-69,127
+PAGE 5: -108,-13,-37,0
+PAGE 6: -61,-86,-53,-25
+PAGE 7: -25,4,-109,80
+---------------------------------------------
+NUM PAGE FAULTS: 7
+NUM BYTES TRANSFERRED: 56
+---------------------------------------------</code></pre></figure>
+
+<p>You will note that the final memory content is coherent with the initial disk content and with the memory transactions!</p>
+
+<p><b>Make sure you produce the output EXACTLY as above</b> including white spaces (no tabs).
+</p>
+
+<p>First you should test your code on small examples, visually inspecting that
+the memory/disk content is coherent with the memory transactions. For further
+testing, you are provided below with a set of output samples along with the
+command lines that produced them (make your a <tt>diff</tt> between your
+output and these output returns nothing, i.e., no found differences):</p>
+
+<ul>
+  <li><tt>java vmsimulation/Simulator V2 16   32   4   10   0  0 &gt; q2_outputsample_1.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V2 16   64   4   20   1  10 &gt; q2_outputsample_2.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V2 1024 4096 16  120  2  0 &gt; q2_outputsample_3.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V2 2048 4096 8   100  20 0 &gt; q2_outputsample_4.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V2 2048 4096 256 200  30 0 &gt; q2_outputsample_5.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V2 32   64   8   2000 33 1 &gt; q2_outputsample_6.txt</tt></li>
+</ul>
+
+<hr>
+
+<h3 id="question-3-adding-a-dirty-bit">Problem #3: Adding a dirty bit</h3>
+
+<p>In this question you enhance your virtual memory manager so that it uses a dirty bit as part of the page table to avoid writing back to disk those pages that haven’t been modified (whether when evicting or when writing all pages via the writeBackAllPagesToDisk() method).</p>
+
+<p>All the above is to be implemented in a class called
+<tt>VirtualMemoryManagerV3</tt>. Make a copy of your <tt>VirtualMemoryManagerV2.java</tt>
+file, renaming it <tt>VirtualMemoryManagerV3.java</tt>, and use this as a starting point.</p>
+
+<p>Your implementation must now produce output that says “(NOT DIRTY)” when a clean page is evicted.</p>
+
+<p>Here is a small example execution for a 8-byte memory, 32-byte disk, 4-byte page size, 4 memory transactions (4 reads and 4 writes), a seed of 1 for the random number generator, and a locality of 0, which is done with:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">java vmsimulation/Simulator V3 8 32 4 4 3 0</code></pre></figure>
+
+<p>and should produce this output:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">INITIAL RAM CONTENT: ALL ZEROS
+INITIAL DISK CONTENT:
+PAGE 0: -51,-19,99,-78
+PAGE 1: 73,-34,44,85
+PAGE 2: 115,114,66,-42
+PAGE 3: -75,19,-55,-46
+PAGE 4: 67,74,-75,-21
+PAGE 5: -101,-89,-48,93
+PAGE 6: -42,-79,96,-103
+PAGE 7: 5,74,-33,-112
+---------------------------------------------
+PERFORMING RANDOMLY GENERATED TRANSACTIONS...
+Read transaction for virtual address: 00100
+Bringing page 1 into frame 0
+RAM: @000 --&gt; 73
+Write transaction for virtual address: 01001
+Bringing page 2 into frame 1
+RAM: @101 &lt;-- -60
+Read transaction for virtual address: 11110
+Evicting page 1 (NOT DIRTY)
+Bringing page 7 into frame 0
+RAM: @010 --&gt; -33
+Write transaction for virtual address: 01100
+Evicting page 2
+Bringing page 3 into frame 1
+RAM: @100 &lt;-- -45
+Read transaction for virtual address: 00001
+Evicting page 7 (NOT DIRTY)
+Bringing page 0 into frame 0
+RAM: @001 --&gt; -19
+Write transaction for virtual address: 01101
+Page 3 is in memory
+RAM: @101 &lt;-- -57
+Read transaction for virtual address: 01100
+Page 3 is in memory
+RAM: @100 --&gt; -45
+Write transaction for virtual address: 10000
+Evicting page 3
+Bringing page 4 into frame 1
+RAM: @100 &lt;-- -54
+END OF MEMORY TRANSACTIONS
+---------------------------------------------
+MEMORY CONTENT:
+000: -51
+001: -19
+010: 99
+011: -78
+100: -54
+101: 74
+110: -75
+111: -21
+---------------------------------------------
+WRITING PAGES BACK TO DISK...
+DISK CONTENT:
+PAGE 0: -51,-19,99,-78
+PAGE 1: 73,-34,44,85
+PAGE 2: 115,-60,66,-42
+PAGE 3: -45,-57,-55,-46
+PAGE 4: -54,74,-75,-21
+PAGE 5: -101,-89,-48,93
+PAGE 6: -42,-79,96,-103
+PAGE 7: 5,74,-33,-112
+---------------------------------------------
+NUM PAGE FAULTS: 6
+NUM BYTES TRANSFERRED: 36
+---------------------------------------------</code></pre></figure>
+
+<p>You will note that the final memory content is coherent with the initial disk content and with the memory transactions!</p>
+
+<p><b>Make sure you produce the output EXACTLY as above</b> including white spaces (no tabs).
+</p>
+
+<p>First you should test your code on small examples, visually inspecting that
+the memory/disk content is coherent with the memory transactions. For further
+testing, you are provided below with a set of output samples along with the
+command lines that produced them (make your a <tt>diff</tt> between your
+output and these output returns nothing, i.e., no found differences):</p>
+
+<ul>
+  <li><tt>java vmsimulation/Simulator V3 16   32   4   10   0  0 &gt; q3_outputsample_1.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V3 16   64   4   20   1  10 &gt;q3_outputsample_2.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V3 1024 4096 16  120  2  0 &gt; q3_outputsample_3.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V3 2048 4096 8   100  20 0 &gt; q3_outputsample_4.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V3 2048 4096 256 200  30 0 &gt; q3_outputsample_5.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V3 32   64   8   2000 33 1 &gt; q3_outputsample_6.txt</tt></li>
+</ul>
+
+<hr>
+
+<h3 id="question-4-implement-lru-page-replacement">Problem #4: Implement LRU Page Replacement</h3>
+
+<p>In this question you must enhance your virtual memory manager, in a class
+called <tt>VirtualMemoryManagerV4</tt>, so that it implements LRU rather
+than FIFO page replacement (and still uses the dirty bit). You can use whatever data structure you want for
+implementing LRU.  You can copy <tt>VirtualMemoryManagerV3.java</tt>, rename it
+<tt>VirtualMemoryManagerV4.java</tt> and use it as a starting point.</p>
+
+<p>Here is a sample execution on the same example as in the previous question using the command:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">java vmsimulation/Simulator V4 8 32 4 4 3 0</code></pre></figure>
+
+<p>and should produce this output:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">INITIAL RAM CONTENT: ALL ZEROS
+INITIAL DISK CONTENT:
+PAGE 0: -51,-19,99,-78
+PAGE 1: 73,-34,44,85
+PAGE 2: 115,114,66,-42
+PAGE 3: -75,19,-55,-46
+PAGE 4: 67,74,-75,-21
+PAGE 5: -101,-89,-48,93
+PAGE 6: -42,-79,96,-103
+PAGE 7: 5,74,-33,-112
+---------------------------------------------
+PERFORMING RANDOMLY GENERATED TRANSACTIONS...
+Read transaction for virtual address: 00100
+Bringing page 1 into frame 0
+RAM: @000 --&gt; 73
+Write transaction for virtual address: 01001
+Bringing page 2 into frame 1
+RAM: @101 &lt;-- -60
+Read transaction for virtual address: 11110
+Evicting page 1 (NOT DIRTY)
+Bringing page 7 into frame 0
+RAM: @010 --&gt; -33
+Write transaction for virtual address: 01100
+Evicting page 2
+Bringing page 3 into frame 1
+RAM: @100 &lt;-- -45
+Read transaction for virtual address: 00001
+Evicting page 7 (NOT DIRTY)
+Bringing page 0 into frame 0
+RAM: @001 --&gt; -19
+Write transaction for virtual address: 01101
+Page 3 is in memory
+RAM: @101 &lt;-- -57
+Read transaction for virtual address: 01100
+Page 3 is in memory
+RAM: @100 --&gt; -45
+Write transaction for virtual address: 10000
+Evicting page 0 (NOT DIRTY)
+Bringing page 4 into frame 0
+RAM: @000 &lt;-- -54
+END OF MEMORY TRANSACTIONS
+---------------------------------------------
+MEMORY CONTENT:
+000: -54
+001: 74
+010: -75
+011: -21
+100: -45
+101: -57
+110: -55
+111: -46
+---------------------------------------------
+WRITING PAGES BACK TO DISK...
+DISK CONTENT:
+PAGE 0: -51,-19,99,-78
+PAGE 1: 73,-34,44,85
+PAGE 2: 115,-60,66,-42
+PAGE 3: -45,-57,-55,-46
+PAGE 4: -54,74,-75,-21
+PAGE 5: -101,-89,-48,93
+PAGE 6: -42,-79,96,-103
+PAGE 7: 5,74,-33,-112
+---------------------------------------------
+NUM PAGE FAULTS: 6
+NUM BYTES TRANSFERRED: 36
+---------------------------------------------</code></pre></figure>
+
+<p>Note that the difference in terms of which pages are evicted between this and the previous version is small. This is because it’s difficult to find a small random example for which FIFO and LRU differ a lot. For larger examples, the difference should be very noticeable.</p>
+
+<ul>
+  <li><tt>java vmsimulation/Simulator V4 16   32   4   10   0  0 q4_outputsample_1.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V4 16   64   4   20   1  10 &gt; q4_outputsample_2.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V4 1024 4096 16  120  2  0 &gt; q4_outputsample_3.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V4 2048 4096 8   100  20 0 &gt; q4_outputsample_4.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V4 2048 4096 256 200  30 0 &gt; q4_outputsample_5.txt</tt></li>
+  <li><tt>java vmsimulation/Simulator V4 32   64   8   2000 33 1 &gt; q4_outputsample_6.txt</tt></li>
+</ul>
+
+</body></html>
